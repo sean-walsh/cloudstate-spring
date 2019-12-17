@@ -47,11 +47,6 @@ public class DeviceEntity {
             ctx.fail("Device already activated");
         }
 
-        // Update internal state
-        activated = true;
-        deviceId = cmd.getDeviceId();
-        customerId = cmd.getCustomerId();
-
         ctx.emit(Domain.DeviceActivated.newBuilder()
                 .setDeviceId(cmd.getDeviceId())
                 .setCustomerId(cmd.getCustomerId()).build());
@@ -61,9 +56,6 @@ public class DeviceEntity {
 
     @CommandHandler
     public Empty assignRoom(Deviceservice.AssignRoomCommand cmd, CommandContext ctx) {
-        // Update internal state
-        room = Optional.of(cmd.getRoom());
-
         ctx.emit(Domain.RoomAssigned.newBuilder()
                 .setDeviceId(cmd.getDeviceId())
                 .setRoom(cmd.getRoom()).build());
