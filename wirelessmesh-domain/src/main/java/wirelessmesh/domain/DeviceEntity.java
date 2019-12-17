@@ -6,6 +6,8 @@ import io.cloudstate.javasupport.eventsourced.*;
 import io.cloudstate.javasupport.eventsourced.EventSourcedEntity;
 import wirelessmesh.*;
 
+import java.util.Optional;
+
 /**
  * This represents the domain entity that will be the digital twin of one or our wireless mesh devices. We model this as closely
  * as possible to the real world behavior of a router owned by one of our customers.
@@ -32,7 +34,7 @@ public class DeviceEntity {
     /**
      * The room in which this device is located.
      */
-    private String room;
+    private Optional<String> room = Optional.empty();
 
     public DeviceEntity(@EntityId String entityId) {
         this.entityId = entityId;
@@ -52,6 +54,18 @@ public class DeviceEntity {
         ctx.emit(DeviceActivated.builder()
                 .routerId(cmd.getDeviceId())
                 .customerId(cmd.getCustomerId()).build());
+
+        return Empty.getDefaultInstance();
+    }
+
+    @CommandHandler
+    public Empty assignRoom(Deviceservice.AssignRoomCommand cmd, CommandContext ctx) {
+        // Update internal state
+        room = Optional.of(cmd.getRoom());
+
+        ctx.emit(RoomAssigned.builder()
+                .routerId(cmd.getDeviceId())
+                .room(cmd.getRoom()).build());
 
         return Empty.getDefaultInstance();
     }

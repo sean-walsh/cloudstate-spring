@@ -12,10 +12,18 @@ message ActivateDeviceCommand {
     string customerId = 2;
 }
 
+message AssignRoomCommand {
+    string deviceId = 1 [(.cloudstate.entity_key) = true];
+    string room = 2;
+}
+
 message Empty {
 }
 
 service DeviceService {
     // One time activation of the router.
     rpc Activate(ActivateDeviceCommand) returns (stream Empty);
+
+    // Assign the router to a location in the home.
+    rpc AssignRoom(AssignRoomCommand) returns (stream Empty);
 }
