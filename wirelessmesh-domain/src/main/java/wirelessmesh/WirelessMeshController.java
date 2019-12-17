@@ -31,4 +31,23 @@ public class WirelessMeshController {
 
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
+
+    @RequestMapping(value = "/assign-room", method = POST)
+    public ResponseEntity<Object> createProduct(@RequestBody Deviceservice.AssignRoomCommand cmd) {
+        ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 8080)
+                .usePlaintext()
+                .build();
+
+        DeviceServiceGrpc.DeviceServiceBlockingStub stub
+                = DeviceServiceGrpc.newBlockingStub(channel);
+
+        stub.assignRoom(Deviceservice.AssignRoomCommand.newBuilder()
+                .setDeviceId(cmd.getDeviceId())
+                .setRoom(cmd.getRoom())
+                .build());
+
+        channel.shutdown();
+
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
 }
