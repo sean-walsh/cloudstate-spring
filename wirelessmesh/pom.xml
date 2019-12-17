@@ -3,11 +3,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>spring.wirelessmesh</groupId>
-        <artifactId>spring-wirelessmesh</artifactId>
+        <groupId>cloudstate.spring.wirelessmesh</groupId>
+        <artifactId>cloudstate-spring-wirelessmesh</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <artifactId>wirelessmesh-domain</artifactId>
+
+    <artifactId>wirelessmesh</artifactId>
     <packaging>jar</packaging>
     <version>1.0-SNAPSHOT</version>
 
@@ -20,11 +21,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>io.grpc</groupId>-->
-<!--            <artifactId>grpc-netty</artifactId>-->
-<!--            <version>1.16.1</version>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>io.grpc</groupId>
             <artifactId>grpc-protobuf</artifactId>
