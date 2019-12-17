@@ -15,7 +15,7 @@ public class WirelessMeshSpringApplication {
                 .registerEventSourcedEntity(
                         DeviceEntity.class,
                         Deviceservice.getDescriptor().findServiceByName("DeviceService"),
-                        Deviceservice.getDescriptor().getFile())
+                        wirelessmesh.persistence.Domain.getDescriptor())
                 .start()
                 .toCompletableFuture()
                 .get();

@@ -5,6 +5,7 @@ import io.cloudstate.javasupport.EntityId;
 import io.cloudstate.javasupport.eventsourced.*;
 import io.cloudstate.javasupport.eventsourced.EventSourcedEntity;
 import wirelessmesh.*;
+import wirelessmesh.persistence.*;
 
 import java.util.Optional;
 
@@ -51,9 +52,9 @@ public class DeviceEntity {
         deviceId = cmd.getDeviceId();
         customerId = cmd.getCustomerId();
 
-        ctx.emit(DeviceActivated.builder()
-                .routerId(cmd.getDeviceId())
-                .customerId(cmd.getCustomerId()).build());
+        ctx.emit(Domain.DeviceActivated.newBuilder()
+                .setDeviceId(cmd.getDeviceId())
+                .setCustomerId(cmd.getCustomerId()).build());
 
         return Empty.getDefaultInstance();
     }
@@ -63,22 +64,22 @@ public class DeviceEntity {
         // Update internal state
         room = Optional.of(cmd.getRoom());
 
-        ctx.emit(RoomAssigned.builder()
-                .routerId(cmd.getDeviceId())
-                .room(cmd.getRoom()).build());
+        ctx.emit(Domain.RoomAssigned.newBuilder()
+                .setDeviceId(cmd.getDeviceId())
+                .setRoom(cmd.getRoom()).build());
 
         return Empty.getDefaultInstance();
     }
 
     @EventHandler
-    public void routerActivatedHandler(DeviceActivated deviceActivated) {
+    public void routerActivatedHandler(Domain.DeviceActivated deviceActivated) {
         activated = true;
-        deviceId = deviceActivated.getRouterId();
+        deviceId = deviceActivated.getDeviceId();
         customerId = deviceActivated.getCustomerId();
     }
 
     @EventHandler
-    public void roomAssignedHandler(RoomAssigned roomAssigned) {
+    public void roomAssignedHandler(Domain.RoomAssigned roomAssigned) {
         room = Optional.of(roomAssigned.getRoom());
     }
 }
