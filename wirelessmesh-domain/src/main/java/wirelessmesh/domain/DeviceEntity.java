@@ -76,4 +76,9 @@ public class DeviceEntity {
         deviceId = deviceActivated.getRouterId();
         customerId = deviceActivated.getCustomerId();
     }
+
+    @EventHandler
+    public void roomAssignedHandler(RoomAssigned roomAssigned) {
+        room = Optional.of(roomAssigned.getRoom());
+    }
 }
