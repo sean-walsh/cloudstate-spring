@@ -7,14 +7,15 @@ import io.cloudstate.javasupport.eventsourced.EventSourcedEntity;
 import wirelessmesh.*;
 import wirelessmesh.persistence.*;
 
-import java.util.Optional;
-
 /**
  * This represents the domain entity that will be the digital twin of one or our wireless mesh devices. We model this as closely
  * as possible to the real world behavior of a router owned by one of our customers.
  */
 @EventSourcedEntity
 public class DeviceEntity {
+    /**
+     * Unique identifier for this entity, also just happens to be the same as deviceId.
+     */
     private final String entityId;
 
     /**
@@ -22,9 +23,7 @@ public class DeviceEntity {
      */
     private Boolean activated;
 
-    /**
-     * Unique id associated with physical device.
-     */
+
     private String deviceId;
 
     /**
@@ -35,8 +34,12 @@ public class DeviceEntity {
     /**
      * The room in which this device is located.
      */
-    private Optional<String> room = Optional.empty();
+    private String room = "";
 
+    /**
+     * Constructor.
+     * @param entityId The entity id will be the deviceId.
+     */
     public DeviceEntity(@EntityId String entityId) {
         this.entityId = entityId;
     }
@@ -72,6 +75,6 @@ public class DeviceEntity {
 
     @EventHandler
     public void roomAssignedHandler(Domain.RoomAssigned roomAssigned) {
-        room = Optional.of(roomAssigned.getRoom());
+        room = roomAssigned.getRoom();
     }
 }

@@ -5,7 +5,6 @@ import "cloudstate/entity_key.proto";
 package wirelessmesh;
 
 option java_package = "wirelessmesh";
-//option java_outer_classname = "DeviceServiceProtos";
 
 message ActivateDeviceCommand {
     string deviceId = 1 [(.cloudstate.entity_key) = true];

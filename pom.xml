@@ -131,7 +131,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <cloudstate.version>0.4.2</cloudstate.version>
+        <cloudstate.version>0.4.3</cloudstate.version>
         <version.number>${git.commit.time}.${git.commit.id.abbrev}</version.number>
     </properties>
 </project>
